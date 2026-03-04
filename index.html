@@ -1,0 +1,462 @@
+<!doctype html>
+<html lang="ur" dir="rtl" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>بلوچی کتاب</title>
+  <script src="vendor/tailwindcss-3.4.17.js"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <script src="/_sdk/data_sdk.js"></script>
+  <link href="vendor/external_1.css" rel="stylesheet">
+  <style>
+    * { font-family: 'Noto Nastaliq Urdu', 'Amiri', serif; }
+    .pattern-bg {
+      background-color: #1a1a2e;
+      background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23c9a227' fill-opacity='0.08'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    }
+    .gold-gradient {
+      background: linear-gradient(135deg, #c9a227 0%, #f4d03f 50%, #c9a227 100%);
+    }
+    .card-hover:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 20px 40px rgba(201, 162, 39, 0.2);
+    }
+    .scrollbar-hide::-webkit-scrollbar { display: none; }
+    .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-fade-in { animation: fadeIn 0.5s ease-out forwards; }
+    .content-display { white-space: pre-wrap; line-height: 2.2; }
+  </style>
+  <style>body { box-sizing: border-box; }</style>
+ </head>
+ <body class="h-full pattern-bg text-gray-100 overflow-auto scrollbar-hide">
+  <div id="app" class="min-h-full w-full"><!-- Header -->
+   <header class="gold-gradient py-6 px-4 shadow-2xl">
+    <div class="max-w-6xl mx-auto text-center">
+     <h1 id="site-title" class="text-4xl md:text-5xl font-bold text-gray-900 mb-2">بلوچی کتاب</h1>
+     <p id="welcome-text" class="text-lg text-gray-800">بلوچی ادب کی دنیا میں خوش آمدید</p>
+    </div>
+   </header><!-- Navigation Tabs -->
+   <nav class="bg-gray-900/80 backdrop-blur-sm sticky top-0 z-40 border-b border-yellow-600/30">
+    <div class="max-w-6xl mx-auto flex justify-center gap-2 p-3 flex-wrap"><button onclick="showSection('home')" id="tab-home" class="tab-btn px-6 py-2 rounded-full bg-yellow-600 text-gray-900 font-bold transition-all"> 🏠 گھر </button> <button onclick="showSection('books')" id="tab-books" class="tab-btn px-6 py-2 rounded-full bg-gray-700 text-gray-200 hover:bg-gray-600 transition-all"> 📚 کتابیں </button> <button onclick="showSection('poetry')" id="tab-poetry" class="tab-btn px-6 py-2 rounded-full bg-gray-700 text-gray-200 hover:bg-gray-600 transition-all"> ✨ شاعری </button> <button onclick="showSection('add')" id="tab-add" class="tab-btn px-6 py-2 rounded-full bg-gray-700 text-gray-200 hover:bg-gray-600 transition-all"> ➕ نیا شامل کریں </button>
+    </div>
+   </nav><!-- Main Content -->
+   <main class="max-w-6xl mx-auto p-4 md:p-6"><!-- Home Section -->
+    <section id="section-home" class="animate-fade-in">
+     <div class="text-center py-12">
+      <div class="text-8xl mb-6">
+       📖
+      </div>
+      <h2 class="text-3xl font-bold text-yellow-500 mb-4">بلوچی ادب کا خزانہ</h2>
+      <p class="text-xl text-gray-300 mb-8 max-w-2xl mx-auto leading-relaxed">یہاں آپ بلوچی زبان کی کتابیں، شاعری اور ادب پڑھ سکتے ہیں۔ اپنی تحریریں بھی شیئر کریں!</p>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-2xl mx-auto">
+       <div class="bg-gray-800/50 rounded-xl p-4 border border-yellow-600/20">
+        <div class="text-3xl mb-2">
+         📚
+        </div>
+        <div id="book-count" class="text-2xl font-bold text-yellow-500">
+         0
+        </div>
+        <div class="text-gray-400 text-sm">
+         کتابیں
+        </div>
+       </div>
+       <div class="bg-gray-800/50 rounded-xl p-4 border border-yellow-600/20">
+        <div class="text-3xl mb-2">
+         ✨
+        </div>
+        <div id="poetry-count" class="text-2xl font-bold text-yellow-500">
+         0
+        </div>
+        <div class="text-gray-400 text-sm">
+         شاعری
+        </div>
+       </div>
+       <div class="bg-gray-800/50 rounded-xl p-4 border border-yellow-600/20">
+        <div class="text-3xl mb-2">
+         👥
+        </div>
+        <div id="author-count" class="text-2xl font-bold text-yellow-500">
+         0
+        </div>
+        <div class="text-gray-400 text-sm">
+         مصنفین
+        </div>
+       </div>
+       <div class="bg-gray-800/50 rounded-xl p-4 border border-yellow-600/20">
+        <div class="text-3xl mb-2">
+         ❤️
+        </div>
+        <div class="text-2xl font-bold text-yellow-500">
+         ∞
+        </div>
+        <div class="text-gray-400 text-sm">
+         محبت
+        </div>
+       </div>
+      </div>
+     </div><!-- Recent Posts -->
+     <div class="mt-8">
+      <h3 class="text-2xl font-bold text-yellow-500 mb-4 text-center">تازہ ترین تحریریں</h3>
+      <div id="recent-posts" class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+       <div class="text-center text-gray-500 py-8 col-span-full">
+        ابھی کوئی تحریر نہیں ہے۔ پہلے شامل کریں!
+       </div>
+      </div>
+     </div>
+    </section><!-- Books Section -->
+    <section id="section-books" class="hidden animate-fade-in">
+     <h2 class="text-3xl font-bold text-yellow-500 mb-6 text-center">📚 کتابیں</h2>
+     <div id="books-list" class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div class="text-center text-gray-500 py-8 col-span-full">
+       ابھی کوئی کتاب نہیں ہے
+      </div>
+     </div>
+    </section><!-- Poetry Section -->
+    <section id="section-poetry" class="hidden animate-fade-in">
+     <h2 class="text-3xl font-bold text-yellow-500 mb-6 text-center">✨ شاعری</h2>
+     <div id="poetry-list" class="grid md:grid-cols-2 gap-4">
+      <div class="text-center text-gray-500 py-8 col-span-full">
+       ابھی کوئی شاعری نہیں ہے
+      </div>
+     </div>
+    </section><!-- Add New Section -->
+    <section id="section-add" class="hidden animate-fade-in">
+     <div class="max-w-2xl mx-auto bg-gray-800/50 rounded-2xl p-6 border border-yellow-600/20">
+      <h2 class="text-2xl font-bold text-yellow-500 mb-6 text-center">➕ نیا شامل کریں</h2>
+      <form id="add-form" class="space-y-4"><!-- Type Selection -->
+       <div class="flex gap-4 justify-center mb-6"><label class="flex items-center gap-2 cursor-pointer"> <input type="radio" name="type" value="book" checked class="w-5 h-5 accent-yellow-500"> <span class="text-lg">📚 کتاب</span> </label> <label class="flex items-center gap-2 cursor-pointer"> <input type="radio" name="type" value="poetry" class="w-5 h-5 accent-yellow-500"> <span class="text-lg">✨ شاعری</span> </label>
+       </div><!-- Title -->
+       <div><label class="block text-yellow-500 mb-2 font-bold">عنوان</label> <input type="text" id="input-title" required class="w-full bg-gray-700 border border-gray-600 rounded-xl px-4 py-3 text-white focus:border-yellow-500 focus:outline-none" placeholder="تحریر کا عنوان لکھیں">
+       </div><!-- Author -->
+       <div><label class="block text-yellow-500 mb-2 font-bold">مصنف</label> <input type="text" id="input-author" required class="w-full bg-gray-700 border border-gray-600 rounded-xl px-4 py-3 text-white focus:border-yellow-500 focus:outline-none" placeholder="مصنف کا نام">
+       </div><!-- Content -->
+       <div><label class="block text-yellow-500 mb-2 font-bold">مواد</label> <textarea id="input-content" required rows="10" class="w-full bg-gray-700 border border-gray-600 rounded-xl px-4 py-3 text-white focus:border-yellow-500 focus:outline-none resize-none" placeholder="یہاں اپنی تحریر لکھیں..."></textarea>
+       </div><!-- Submit --> <button type="submit" id="submit-btn" class="w-full gold-gradient text-gray-900 font-bold py-4 rounded-xl hover:opacity-90 transition-all text-lg"> شامل کریں </button>
+      </form>
+     </div>
+    </section><!-- Reading View Modal -->
+    <div id="reading-modal" class="hidden fixed inset-0 bg-black/90 z-50 overflow-auto p-4">
+     <div class="max-w-3xl mx-auto bg-gray-900 rounded-2xl border border-yellow-600/30 my-8">
+      <div class="gold-gradient p-4 rounded-t-2xl flex justify-between items-center">
+       <h2 id="modal-title" class="text-2xl font-bold text-gray-900">عنوان</h2><button onclick="closeModal()" class="text-gray-900 hover:text-gray-700 text-3xl">×</button>
+      </div>
+      <div class="p-6">
+       <p id="modal-author" class="text-yellow-500 mb-4 text-lg">مصنف</p>
+       <div id="modal-content" class="text-gray-200 text-xl content-display leading-loose"></div>
+       <div class="mt-6 pt-4 border-t border-gray-700 flex justify-between items-center"><span id="modal-date" class="text-gray-500 text-sm"></span> <button onclick="deletePost()" id="delete-btn" class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg transition-all"> 🗑️ حذف کریں </button>
+       </div>
+      </div>
+     </div>
+    </div>
+   </main><!-- Footer -->
+   <footer class="bg-gray-900/80 border-t border-yellow-600/20 py-6 mt-8">
+    <div class="text-center text-gray-500">
+     <p>بلوچی کتاب © 2024</p>
+     <p class="text-sm mt-1">بلوچی ادب کی ترویج کے لیے</p>
+     <div class="mt-4 flex justify-center items-center gap-4 flex-wrap">
+      <p class="text-sm">بنایا گیا: <a href="https://www.instagram.com/deedag.baluch?igsh=MXg3Zm50aHliNGFhNQ==" target="_blank" rel="noopener noreferrer" class="text-yellow-500 hover:text-yellow-400 transition-all font-bold">دیدگ بلوچ</a> کی طرف سے</p><a href="https://www.instagram.com/deedag.baluch?igsh=MXg3Zm50aHliNGFhNQ==" target="_blank" rel="noopener noreferrer" class="text-yellow-500 hover:text-yellow-400 transition-all font-bold text-sm">📱 Instagram</a>
+     </div>
+    </div>
+   </footer>
+  </div>
+  <script>
+    // Default Configuration
+    const defaultConfig = {
+      site_title: 'بلوچی کتاب',
+      welcome_text: 'بلوچی ادب کی دنیا میں خوش آمدید',
+      background_color: '#1a1a2e',
+      accent_color: '#c9a227',
+      text_color: '#f3f4f6',
+      card_color: '#374151',
+      secondary_color: '#4b5563'
+    };
+
+    let allPosts = [];
+    let currentPostId = null;
+    let currentSection = 'home';
+
+    // Element SDK Setup
+    const elementHandler = {
+      defaultConfig,
+      onConfigChange: async (config) => {
+        document.getElementById('site-title').textContent = config.site_title || defaultConfig.site_title;
+        document.getElementById('welcome-text').textContent = config.welcome_text || defaultConfig.welcome_text;
+        
+        document.body.style.backgroundColor = config.background_color || defaultConfig.background_color;
+        document.querySelectorAll('.gold-gradient').forEach(el => {
+          el.style.background = `linear-gradient(135deg, ${config.accent_color || defaultConfig.accent_color} 0%, #f4d03f 50%, ${config.accent_color || defaultConfig.accent_color} 100%)`;
+        });
+      },
+      mapToCapabilities: (config) => ({
+        recolorables: [
+          {
+            get: () => config.background_color || defaultConfig.background_color,
+            set: (v) => window.elementSdk.setConfig({ background_color: v })
+          },
+          {
+            get: () => config.card_color || defaultConfig.card_color,
+            set: (v) => window.elementSdk.setConfig({ card_color: v })
+          },
+          {
+            get: () => config.text_color || defaultConfig.text_color,
+            set: (v) => window.elementSdk.setConfig({ text_color: v })
+          },
+          {
+            get: () => config.accent_color || defaultConfig.accent_color,
+            set: (v) => window.elementSdk.setConfig({ accent_color: v })
+          },
+          {
+            get: () => config.secondary_color || defaultConfig.secondary_color,
+            set: (v) => window.elementSdk.setConfig({ secondary_color: v })
+          }
+        ],
+        borderables: [],
+        fontEditable: undefined,
+        fontSizeable: undefined
+      }),
+      mapToEditPanelValues: (config) => new Map([
+        ['site_title', config.site_title || defaultConfig.site_title],
+        ['welcome_text', config.welcome_text || defaultConfig.welcome_text]
+      ])
+    };
+
+    // Data SDK Handler
+    const dataHandler = {
+      onDataChanged: (data) => {
+        allPosts = data;
+        updateStats();
+        renderCurrentSection();
+      }
+    };
+
+    // Initialize SDKs
+    async function init() {
+      if (window.elementSdk) {
+        window.elementSdk.init(elementHandler);
+      }
+      if (window.dataSdk) {
+        await window.dataSdk.init(dataHandler);
+      }
+    }
+    init();
+
+    // Update Statistics
+    function updateStats() {
+      const books = allPosts.filter(p => p.type === 'book');
+      const poetry = allPosts.filter(p => p.type === 'poetry');
+      const authors = [...new Set(allPosts.map(p => p.author))];
+      
+      document.getElementById('book-count').textContent = books.length;
+      document.getElementById('poetry-count').textContent = poetry.length;
+      document.getElementById('author-count').textContent = authors.length;
+    }
+
+    // Show Section
+    function showSection(section) {
+      currentSection = section;
+      
+      document.querySelectorAll('[id^="section-"]').forEach(el => el.classList.add('hidden'));
+      document.getElementById(`section-${section}`).classList.remove('hidden');
+      
+      document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.classList.remove('bg-yellow-600', 'text-gray-900', 'font-bold');
+        btn.classList.add('bg-gray-700', 'text-gray-200');
+      });
+      document.getElementById(`tab-${section}`).classList.remove('bg-gray-700', 'text-gray-200');
+      document.getElementById(`tab-${section}`).classList.add('bg-yellow-600', 'text-gray-900', 'font-bold');
+      
+      renderCurrentSection();
+    }
+
+    // Render Current Section
+    function renderCurrentSection() {
+      if (currentSection === 'home') renderRecentPosts();
+      else if (currentSection === 'books') renderBooks();
+      else if (currentSection === 'poetry') renderPoetry();
+    }
+
+    // Create Post Card
+    function createPostCard(post) {
+      const isPoetry = post.type === 'poetry';
+      const icon = isPoetry ? '✨' : '📚';
+      const preview = post.content.substring(0, 150) + (post.content.length > 150 ? '...' : '');
+      const date = new Date(post.createdAt).toLocaleDateString('ur-PK');
+      
+      return `
+        <div class="bg-gray-800/70 rounded-xl p-5 border border-yellow-600/20 card-hover transition-all duration-300 cursor-pointer"
+             onclick="openPost('${post.__backendId}')">
+          <div class="flex items-start gap-3 mb-3">
+            <span class="text-2xl">${icon}</span>
+            <div class="flex-1">
+              <h3 class="text-xl font-bold text-yellow-500 mb-1">${post.title}</h3>
+              <p class="text-gray-400 text-sm">✍️ ${post.author}</p>
+            </div>
+          </div>
+          <p class="text-gray-300 text-sm leading-relaxed mb-3 content-display">${preview}</p>
+          <div class="text-gray-500 text-xs">${date}</div>
+        </div>
+      `;
+    }
+
+    // Render Recent Posts
+    function renderRecentPosts() {
+      const container = document.getElementById('recent-posts');
+      const recent = [...allPosts].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)).slice(0, 6);
+      
+      if (recent.length === 0) {
+        container.innerHTML = '<div class="text-center text-gray-500 py-8 col-span-full">ابھی کوئی تحریر نہیں ہے۔ پہلے شامل کریں!</div>';
+        return;
+      }
+      
+      container.innerHTML = recent.map(createPostCard).join('');
+    }
+
+    // Render Books
+    function renderBooks() {
+      const container = document.getElementById('books-list');
+      const books = allPosts.filter(p => p.type === 'book');
+      
+      if (books.length === 0) {
+        container.innerHTML = '<div class="text-center text-gray-500 py-8 col-span-full">ابھی کوئی کتاب نہیں ہے</div>';
+        return;
+      }
+      
+      container.innerHTML = books.map(createPostCard).join('');
+    }
+
+    // Render Poetry
+    function renderPoetry() {
+      const container = document.getElementById('poetry-list');
+      const poetry = allPosts.filter(p => p.type === 'poetry');
+      
+      if (poetry.length === 0) {
+        container.innerHTML = '<div class="text-center text-gray-500 py-8 col-span-full">ابھی کوئی شاعری نہیں ہے</div>';
+        return;
+      }
+      
+      container.innerHTML = poetry.map(createPostCard).join('');
+    }
+
+    // Open Post
+    function openPost(id) {
+      const post = allPosts.find(p => p.__backendId === id);
+      if (!post) return;
+      
+      currentPostId = id;
+      document.getElementById('modal-title').textContent = post.title;
+      document.getElementById('modal-author').textContent = `✍️ ${post.author}`;
+      document.getElementById('modal-content').textContent = post.content;
+      document.getElementById('modal-date').textContent = new Date(post.createdAt).toLocaleDateString('ur-PK');
+      document.getElementById('reading-modal').classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+    }
+
+    // Close Modal
+    function closeModal() {
+      document.getElementById('reading-modal').classList.add('hidden');
+      document.body.style.overflow = 'auto';
+      currentPostId = null;
+    }
+
+    // Delete Post
+    let deleteConfirmState = false;
+    async function deletePost() {
+      const btn = document.getElementById('delete-btn');
+      
+      if (!deleteConfirmState) {
+        deleteConfirmState = true;
+        btn.textContent = '⚠️ تصدیق کریں؟';
+        btn.classList.add('bg-orange-600');
+        setTimeout(() => {
+          deleteConfirmState = false;
+          btn.textContent = '🗑️ حذف کریں';
+          btn.classList.remove('bg-orange-600');
+        }, 3000);
+        return;
+      }
+      
+      const post = allPosts.find(p => p.__backendId === currentPostId);
+      if (!post) return;
+      
+      btn.textContent = 'حذف ہو رہا ہے...';
+      btn.disabled = true;
+      
+      const result = await window.dataSdk.delete(post);
+      
+      if (result.isOk) {
+        closeModal();
+      } else {
+        btn.textContent = 'غلطی! دوبارہ کوشش کریں';
+      }
+      
+      deleteConfirmState = false;
+      btn.disabled = false;
+      setTimeout(() => {
+        btn.textContent = '🗑️ حذف کریں';
+      }, 2000);
+    }
+
+    // Form Submit
+    document.getElementById('add-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      if (allPosts.length >= 999) {
+        const form = document.getElementById('add-form');
+        const warning = document.createElement('div');
+        warning.className = 'bg-red-600/20 border border-red-500 text-red-400 p-4 rounded-xl text-center';
+        warning.textContent = '⚠️ زیادہ سے زیادہ 999 تحریریں شامل کی جا سکتی ہیں';
+        form.insertBefore(warning, form.firstChild);
+        setTimeout(() => warning.remove(), 5000);
+        return;
+      }
+      
+      const btn = document.getElementById('submit-btn');
+      const type = document.querySelector('input[name="type"]:checked').value;
+      const title = document.getElementById('input-title').value.trim();
+      const author = document.getElementById('input-author').value.trim();
+      const content = document.getElementById('input-content').value.trim();
+      
+      if (!title || !author || !content) return;
+      
+      btn.textContent = 'شامل ہو رہا ہے...';
+      btn.disabled = true;
+      
+      const result = await window.dataSdk.create({
+        id: Date.now().toString(),
+        title,
+        author,
+        content,
+        type,
+        createdAt: new Date().toISOString()
+      });
+      
+      if (result.isOk) {
+        document.getElementById('input-title').value = '';
+        document.getElementById('input-author').value = '';
+        document.getElementById('input-content').value = '';
+        btn.textContent = '✅ کامیابی سے شامل ہوا!';
+        setTimeout(() => {
+          showSection('home');
+          btn.textContent = 'شامل کریں';
+          btn.disabled = false;
+        }, 1500);
+      } else {
+        btn.textContent = '❌ غلطی! دوبارہ کوشش کریں';
+        btn.disabled = false;
+        setTimeout(() => {
+          btn.textContent = 'شامل کریں';
+        }, 2000);
+      }
+    });
+
+    // Close modal on escape key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeModal();
+    });
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9d728e29779421e8',t:'MTc3MjY0NDg2Ni4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
